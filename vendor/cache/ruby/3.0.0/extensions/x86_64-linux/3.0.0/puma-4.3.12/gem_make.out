@@ -1,0 +1,37 @@
+current directory: /home/asxab/railstut/dz_rails/event_board/vendor/cache/ruby/3.0.0/gems/puma-4.3.12/ext/puma_http11
+/home/asxab/.rbenv/versions/3.0.0/bin/ruby -I /home/asxab/.rbenv/versions/3.0.0/lib/ruby/3.0.0 -r ./siteconf20240304-38213-ba3mt0.rb extconf.rb
+checking for BIO_read() in -lcrypto... yes
+checking for SSL_CTX_new() in -lssl... yes
+checking for openssl/bio.h... yes
+checking for DTLS_method() in openssl/ssl.h... yes
+checking for TLS_server_method() in openssl/ssl.h... yes
+checking for SSL_CTX_set_min_proto_version in openssl/ssl.h... yes
+checking for Random.bytes... yes
+creating Makefile
+
+current directory: /home/asxab/railstut/dz_rails/event_board/vendor/cache/ruby/3.0.0/gems/puma-4.3.12/ext/puma_http11
+make "DESTDIR=" clean
+
+current directory: /home/asxab/railstut/dz_rails/event_board/vendor/cache/ruby/3.0.0/gems/puma-4.3.12/ext/puma_http11
+make "DESTDIR="
+compiling http11_parser.c
+compiling io_buffer.c
+compiling mini_ssl.c
+mini_ssl.c: В функции «engine_init_server»:
+mini_ssl.c:166:7: предупреждение: неиспользуемая переменная «min» [-Wunused-variable]
+  166 |   int min, ssl_options;
+      |       ^~~
+mini_ssl.c: В функции «raise_error»:
+mini_ssl.c:334:6: предупреждение: функции, возможно, следует задать атрибут «noreturn» [-Wsuggest-attribute=noreturn]
+  334 | void raise_error(SSL* ssl, int result) {
+      |      ^~~~~~~~~~~
+На верхнем уровне:
+cc1: замечание: unrecognized command-line option «-Wno-self-assign» may have been intended to silence earlier diagnostics
+cc1: замечание: unrecognized command-line option «-Wno-parentheses-equality» may have been intended to silence earlier diagnostics
+cc1: замечание: unrecognized command-line option «-Wno-constant-logical-operand» may have been intended to silence earlier diagnostics
+compiling puma_http11.c
+linking shared-object puma/puma_http11.so
+
+current directory: /home/asxab/railstut/dz_rails/event_board/vendor/cache/ruby/3.0.0/gems/puma-4.3.12/ext/puma_http11
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 puma_http11.so ./.gem.20240304-38213-gcl9jt/puma

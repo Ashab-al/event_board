@@ -18,10 +18,10 @@ class Article < ApplicationRecord
 
   private
 
-    def user_dont_have_events
-      if user&.events&.empty? && user&.subscriptions&.empty?
-        errors.add(:event, I18n.t("activerecord.models.errors.user_dont_have_events"))
-      end
+  def user_dont_have_events
+    if user&.events&.empty? && user&.subscriptions&.empty?
+      errors.add(:event, I18n.t("activerecord.models.errors.user_dont_have_events"))
     end
+  end
 end
 

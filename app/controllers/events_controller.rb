@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
+  include LoadEvent
   before_action :authenticate_user!, only: [:new, :edit, :update, :destroy, :add_pictures]  
-  before_action :set_event, except: [:index, :new, :create]
   before_action :password_guard!, only: [:show]
 
   def index 
@@ -66,25 +66,16 @@ class EventsController < ApplicationController
 
   private
 
-    def password_guard! 
-      return true if @event.pincode.blank?
-      return true if signed_in? && current_user == @event.user
+  def password_guard!
+    result = PasswordGuardInteractor.call(event: event, pincode: params[:pincode])
 
-      if params[:pincode].present? && @event.pincode_valid?(params[:pincode])
-        cookies.permanent["events_#{@event.id}_pincode"] = params["pincode"]
-      end
+    return if result.success?
 
-      unless @event.pincode_valid?(cookies.permanent["events_#{@event.id}_pincode"])
-        flash.now[:alert] = I18n.t('controllers.events.wrong_pincode') if params[:pincode].present?
-        render 'pincode_form'
-      end
-    end
+    flash.now[:alert] = result.message
+    render 'pincode_form'
+  end
 
-    def set_event
-      @event = Event.find(params[:id] || params[:event_id])
-    end
-    
-    def event_params
-      params.require(:event).permit(:title, :description, :address, :datetime, :image, :pincode)
-    end
+  def event_params
+    params.require(:event).permit(:title, :description, :address, :datetime, :image, :pincode)
+  end
 end

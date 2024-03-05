@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.2'
+ruby '3.0.0'
 
 gem 'rails', '~> 6.0.2'
 gem 'pg', '>= 0.18', '< 2.0'
@@ -13,6 +13,7 @@ gem "devise", "~> 4.8"
 gem 'devise-i18n'
 gem "tailwindcss-rails", "~> 2.0"
 gem "image_processing", "~> 1.12"
+gem "draper"
 
 group :development, :test do
   gem 'byebug'

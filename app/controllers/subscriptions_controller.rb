@@ -1,20 +1,23 @@
 class SubscriptionsController < ApplicationController
-  before_action :set_event, only: [:create, :destroy]
-  before_action :set_subscription, only: [:destroy]
+  include LoadEvent
 
   def create
-    @new_subscription = @event.subscriptions.build(subscription_params)
+    @new_subscription = Subscription.build(subscription_params)
+    @new_subscription.event = @event
     @new_subscription.user = current_user
 
-    if @new_subscription.save
-      EventMailer.subscription(@event, @new_subscription).deliver_now
-      redirect_to @event, notice: I18n.t('controllers.subscriptions.created')
-    else
-      redirect_to 'events/show', notice: I18n.t('controllers.subscriptions.error')
+    ActiveRecord:Base.transaction do 
+      if @new_subscription.save
+        EventMailer.subscription(@event, @new_subscription).deliver_now
+        redirect_to @event, notice: I18n.t('controllers.subscriptions.created')
+      else
+        redirect_to 'events/show', notice: I18n.t('controllers.subscriptions.error')
+      end
     end
   end
 
   def destroy
+    @subscription - @event.subscriptions.find_by(user_id: current_user.id)
     authorize @subscription
     @subscription.destroy
 
@@ -22,15 +25,8 @@ class SubscriptionsController < ApplicationController
   end
 
   private
-    def set_subscription
-      @subscription = @event.subscriptions.find_by(user_id: current_user.id)
-    end
 
-    def set_event
-      @event = Event.find(params[:event_id])
-    end
-
-    def subscription_params
-      params.fetch(:subscription, {}).permit(:user_email, :user_name)
-    end
+  def subscription_params
+    params.fetch(:subscription, {}).permit(:user_email, :user_name)
+  end
 end

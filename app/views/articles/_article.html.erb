@@ -1,6 +1,7 @@
 <div class="max-w-sm mx-auto rounded overflow-hidden shadow-lg">
   <%= image_tag model_picture(article), class: 'w-full h-60' %>
   <div class="px-6 py-4">
+    <span> <%= article.formatted_create_date %> </span>
     <div class="font-bold text-xl mb-2"><%= article.title %></div>
     <p class="text-gray-700 text-base mb-4 ">
       <%= truncate(strip_tags(article.body.to_s) , :length => 100, :separator => '...') %>
